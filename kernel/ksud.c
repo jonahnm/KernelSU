@@ -71,8 +71,8 @@ void on_post_fs_data(void)
 	// sanity check, this may influence the performance
 	stop_input_hook();
 
-	ksu_devpts_sid = ksu_get_devpts_sid();
-	pr_info("devpts sid: %d\n", ksu_devpts_sid);
+	//ksu_devpts_sid = ksu_get_devpts_sid();
+	//pr_info("devpts sid: %d\n", ksu_devpts_sid);
 }
 
 #define MAX_ARG_STRINGS 0x7FFFFFFF
