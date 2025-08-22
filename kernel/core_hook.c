@@ -172,13 +172,13 @@ void escape_to_root(void)
 
 	setup_groups(profile, cred);
 
-	//rcu_read_unlock();
+	rcu_read_unlock();
 
 	// Refer to kernel/seccomp.c: seccomp_set_mode_strict
 	// When disabling Seccomp, ensure that current->sighand->siglock is held during the operation.
-	//spin_lock_irq(&current->sighand->siglock);
-	//disable_seccomp();
-	//spin_unlock_irq(&current->sighand->siglock);
+	spin_lock_irq(&current->sighand->siglock);
+	disable_seccomp();
+	spin_unlock_irq(&current->sighand->siglock);
 
 	//setup_selinux(profile->selinux_domain);
 }
