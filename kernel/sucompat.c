@@ -10,7 +10,6 @@
 #include <linux/version.h>
 #include <linux/sched/task_stack.h>
 
-#include "objsec.h"
 #include "allowlist.h"
 #include "arch.h"
 #include "klog.h" // IWYU pragma: keep
@@ -178,14 +177,14 @@ int ksu_handle_devpts(struct inode *inode)
 
 	if (!ksu_is_allow_uid(uid))
 		return 0;
-
+/*
 	if (ksu_devpts_sid) {
 		struct inode_security_struct *sec = selinux_inode(inode);
 		if (sec) {
 			sec->sid = ksu_devpts_sid;
 		}
 	}
-
+*/
 	return 0;
 }
 
