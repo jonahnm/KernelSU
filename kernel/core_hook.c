@@ -40,14 +40,12 @@
 #include "ksu.h"
 #include "ksud.h"
 #include "manager.h"
-#include "selinux/selinux.h"
 #include "throne_tracker.h"
 #include "throne_tracker.h"
 #include "kernel_compat.h"
 
 static bool ksu_module_mounted = false;
 
-extern int handle_sepolicy(unsigned long arg3, void __user *arg4);
 
 static bool ksu_su_compat_enabled = true;
 extern void ksu_sucompat_init();
@@ -174,15 +172,15 @@ void escape_to_root(void)
 
 	setup_groups(profile, cred);
 
-	rcu_read_unlock();
+	//rcu_read_unlock();
 
 	// Refer to kernel/seccomp.c: seccomp_set_mode_strict
 	// When disabling Seccomp, ensure that current->sighand->siglock is held during the operation.
-	spin_lock_irq(&current->sighand->siglock);
-	disable_seccomp();
-	spin_unlock_irq(&current->sighand->siglock);
+	//spin_lock_irq(&current->sighand->siglock);
+	//disable_seccomp();
+	//spin_unlock_irq(&current->sighand->siglock);
 
-	setup_selinux(profile->selinux_domain);
+	//setup_selinux(profile->selinux_domain);
 }
 
 int ksu_handle_rename(struct dentry *old_dentry, struct dentry *new_dentry)
@@ -346,7 +344,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 		}
 		return 0;
 	}
-
+/*
 	if (arg2 == CMD_SET_SEPOLICY) {
 		if (!from_root) {
 			return 0;
@@ -359,7 +357,7 @@ int ksu_handle_prctl(int option, unsigned long arg2, unsigned long arg3,
 
 		return 0;
 	}
-
+*/
 	if (arg2 == CMD_CHECK_SAFEMODE) {
 		if (ksu_is_safe_mode()) {
 			pr_warn("safemode enabled!\n");
